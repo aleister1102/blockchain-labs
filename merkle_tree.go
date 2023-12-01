@@ -46,7 +46,7 @@ func NewMerkleNode(left, right *MerkleNode, data []byte) *MerkleNode {
 // Tạo mới cây Merkle
 func NewMerkleTree(data [][]byte) *MerkleTree {
 	var nodes []MerkleNode
-	var merkleTree *MerkleTree
+	merkleTree := &MerkleTree{}
 
 	// Nếu số lượng các node là lẻ thì nhân đôi node cuối cùng để thành chẵn (cây nhị phân)
 	if len(data)%2 != 0 {
