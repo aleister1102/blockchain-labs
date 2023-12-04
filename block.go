@@ -41,11 +41,11 @@ func (b *Block) SetHash() {
 
 // HashTransactions tính toán giá trị hash cho tất cả các giao dịch trong block
 func (b *Block) HashTransactions() []byte {
-	var dataOfTransactions [][]byte
+	var dataOfTxs []*Transaction
 	for _, tx := range b.Transactions {
-		dataOfTransactions = append(dataOfTransactions, tx.Data)
+		dataOfTxs = append(dataOfTxs, tx)
 	}
-	merkleTree := NewMerkleTree(dataOfTransactions)
+	merkleTree := NewMerkleTree(dataOfTxs)
 	return merkleTree.RootNode.Data
 }
 

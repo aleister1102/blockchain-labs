@@ -25,6 +25,18 @@ func main() {
 			fmt.Printf("> Data: %s ", tx.Data)
 		}
 		fmt.Printf("\nHash: %x\n", block.Hash)
+
+		// Kiểm tra xem tx có nội dung là "Transaction 1" có trong block hay không sử dụng Merkle Path
+		// Có thể cho phép người dùng nhập nội dung transaction cần kiểm tra
+		fmt.Printf("Check whether transaction with content 'Trasaction 1' is in block %x\n", block.Hash)
+
+		// Xây dựng lại cây merkle từ các transactions (cách làm này chưa tối ưu)
+		merkleTree := NewMerkleTree(block.Transactions)
+
+		// Xác thực transaction
+		verifyRes := merkleTree.Verify(*block, Transaction{[]byte("Transaction 1")})
+
+		fmt.Printf("Verify result: %v\n", verifyRes)
 	}
 
 }
