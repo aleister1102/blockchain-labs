@@ -9,11 +9,12 @@ func main() {
 
 	// Thêm 10 block vào blockchain
 	for i := 0; i <= 20; i += 3 {
-		bc.AddBlock([]*Transaction{
-			{[]byte(fmt.Sprintf("Block %d", i+1))},
-			{[]byte(fmt.Sprintf("Block %d", i+2))},
-			{[]byte(fmt.Sprintf("Block %d", i+3))},
-		})
+		transactions := []*Transaction{
+			{[]byte(fmt.Sprintf("Transaction %d", i+1))},
+			{[]byte(fmt.Sprintf("Transaction %d", i+2))},
+			{[]byte(fmt.Sprintf("Transaction %d", i+3))},
+		}
+		bc.AddBlock(transactions)
 	}
 
 	// In thông tin của mỗi block trong blockchain

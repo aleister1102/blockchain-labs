@@ -22,19 +22,10 @@ type Block struct {
 
 // NewBlock tạo một block mới với các giao dịch và hash của block trước đó
 func NewBlock(transactions []*Transaction, prevBlockHash []byte) *Block {
-	block := &Block{time.Now().Unix(), transactions, prevBlockHash, []byte{}}
+	now := time.Now().Unix()
+	block := &Block{now, transactions, prevBlockHash, []byte{}}
 	block.SetHash()
 	return block
-}
-
-// HashTransactions tính toán giá trị hash cho tất cả các giao dịch trong block
-func (b *Block) HashTransactions() []byte {
-	var txHashes [][]byte
-	for _, tx := range b.Transactions {
-		txHashes = append(txHashes, tx.Data)
-	}
-	merkleTree := NewMerkleTree(txHashes)
-	return merkleTree.RootNode.Data
 }
 
 // SetHash tính toán và thiết lập giá trị hash cho block
@@ -46,6 +37,16 @@ func (b *Block) SetHash() {
 
 	b.Hash = hash[:]
 	fmt.Printf("Merkle root of Block %s is: %x \n", fmt.Sprintf("%x...", hash[0:3]), merkleRoot)
+}
+
+// HashTransactions tính toán giá trị hash cho tất cả các giao dịch trong block
+func (b *Block) HashTransactions() []byte {
+	var dataOfTransactions [][]byte
+	for _, tx := range b.Transactions {
+		dataOfTransactions = append(dataOfTransactions, tx.Data)
+	}
+	merkleTree := NewMerkleTree(dataOfTransactions)
+	return merkleTree.RootNode.Data
 }
 
 // NewGenesisBlock tạo một block genesis

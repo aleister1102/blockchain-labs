@@ -7,7 +7,8 @@ type Blockchain struct {
 
 // NewBlockchain tạo một blockchain mới với block genesis
 func NewBlockchain() *Blockchain {
-	return &Blockchain{[]*Block{NewGenesisBlock()}}
+	genesisBlock := NewGenesisBlock()
+	return &Blockchain{[]*Block{genesisBlock}}
 }
 
 // AddBlock thêm một block mới vào blockchain
