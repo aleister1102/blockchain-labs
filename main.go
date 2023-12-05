@@ -1,5 +1,3 @@
-// main.go
-
 package main
 
 import (
@@ -21,7 +19,7 @@ var (
 	readBlock            = flag.Int("readblock", -1, "Specify the block number to read")
 )
 
-// SaveBlockchain saves the blockchain to a file
+// Lưu blockchain vào file
 func SaveBlockchain(bc *Blockchain) error {
 	file, err := os.Create(blockchainFile)
 	if err != nil {
@@ -33,7 +31,7 @@ func SaveBlockchain(bc *Blockchain) error {
 	return encoder.Encode(bc)
 }
 
-// LoadBlockchain loads the blockchain from a file
+// Load blockchain từ file
 func LoadBlockchain() (*Blockchain, error) {
 	file, err := os.Open(blockchainFile)
 	if err != nil {
@@ -50,21 +48,21 @@ func LoadBlockchain() (*Blockchain, error) {
 func main() {
 	flag.Parse()
 
-	// Load the blockchain
+	// Load blockchain
 	bc, err := LoadBlockchain()
 	if err != nil {
-		// Create a new blockchain if loading fails
+		// Tạo mới một blockchain nếu không load được
 		bc = NewBlockchain()
 	}
 
-	// Check for specific commands and perform actions
+	// Kiểm tra các command và thực hiện các hành động tương ứng
 	switch *command {
 	case "add":
-		// Add the specified number of blocks with the specified number of transactions per block
+		// Thêm vào một số block với số lượng transaction cho trước
 		for i := 0; i < *numBlocks; i++ {
 			transactions := []*Transaction{}
 			for j := 0; j < *transactionsPerBlock; j++ {
-				// Use the specified blockData or a default value if not provided
+				// Sử dụng blockData cho trước hoặc sử dụng giá trị mặc định nếu không có
 				data := *blockData
 				if data == "" {
 					data = fmt.Sprintf("Transaction %d", (i*(*transactionsPerBlock))+j+1)
@@ -76,7 +74,7 @@ func main() {
 		fmt.Printf("Added %d blocks with %d transactions per block.\n", *numBlocks, *transactionsPerBlock)
 
 	case "read":
-		//read from a specific block
+		// Tạo một block mới với transaction cho trước
 		if *readBlock != -1 {
 			if *readBlock < 0 || *readBlock >= len(bc.Blocks) {
 				fmt.Println("Error: Invalid block number.")
@@ -89,11 +87,11 @@ func main() {
 				fmt.Printf("> Data: %s ", tx.Data)
 			}
 			fmt.Printf("\nHash: %x\n", bc.Blocks[*readBlock].Hash)
-		} else { // Read all blocks
+		} else { // Đọc tất cả các block
 			fmt.Printf("\nreading Block: all\n")
 			fmt.Printf("\nBlockchain:\n")
 
-			// Read information of each block in the blockchain
+			// Đọc thông tin của từng block trong blockchain
 			for i, block := range bc.Blocks {
 				fmt.Printf("\nBlock %d\n", i)
 				fmt.Printf("Prev. hash: %x\n", block.PrevBlockHash)
@@ -105,16 +103,16 @@ func main() {
 		}
 
 	case "verify":
-		// Verify a transaction in the blockchain
+		// Xác thực một transaction trong blockchain
 		if *verifyBlock != -1 {
-			// Verify in a specific block
+			// Xác thực trong một block cụ thể
 			if *verifyBlock < 0 || *verifyBlock >= len(bc.Blocks) {
 				fmt.Println("Error: Invalid block number.")
 				os.Exit(1)
 			}
 			verifyInBlock(bc, *verifyBlock, *verifyContent)
 		} else {
-			// Verify in all blocks
+			// Xác thực trong tất cả các block
 			for i := range bc.Blocks {
 				verifyInBlock(bc, i, *verifyContent)
 			}
@@ -139,14 +137,14 @@ func main() {
 		fmt.Println("No specific command provided. Use 'go run . -command=help' to see available commands.")
 	}
 
-	// Save the blockchain after modifications
+	// Lưu blockchain sau khi đã thay đổi
 	err = SaveBlockchain(bc)
 	if err != nil {
 		fmt.Println("Error saving blockchain:", err)
 	}
 }
 
-// Verify a transaction in a specific block
+// Xác thực một transaction trong một block cụ thể
 func verifyInBlock(bc *Blockchain, blockNumber int, verifyContent string) {
 	block := bc.Blocks[blockNumber]
 	fmt.Printf("\nVerifying transaction in Block %d\n", blockNumber)
