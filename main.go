@@ -77,12 +77,12 @@ func main() {
 
 	case "read":
 		//read from a specific block
-		fmt.Printf("\nreading Block: %d\n", *readBlock)
 		if *readBlock != -1 {
 			if *readBlock < 0 || *readBlock >= len(bc.Blocks) {
 				fmt.Println("Error: Invalid block number.")
 				os.Exit(1)
 			}
+			fmt.Printf("\nreading Block: %d\n", *readBlock)
 			fmt.Printf("\nBlock %d\n", *readBlock)
 			fmt.Printf("Prev. hash: %x\n", bc.Blocks[*readBlock].PrevBlockHash)
 			for _, tx := range bc.Blocks[*readBlock].Transactions {
@@ -90,7 +90,8 @@ func main() {
 			}
 			fmt.Printf("\nHash: %x\n", bc.Blocks[*readBlock].Hash)
 		} else { // Read all blocks
-			fmt.Printf("\nBlockchain\n")
+			fmt.Printf("\nreading Block: all\n")
+			fmt.Printf("\nBlockchain:\n")
 
 			// Read information of each block in the blockchain
 			for i, block := range bc.Blocks {
@@ -119,13 +120,13 @@ func main() {
 			}
 		}
 	case "help":
-		fmt.Println("Available commands:")
+		fmt.Println("\nAvailable commands:")
 		fmt.Println("-command=add -numblocks=<number> -transactionsperblock=<number>")
 		fmt.Println("-command=add -blockdata=<data>")
 		fmt.Println("-command=read [-readblock=<block number>]")
 		fmt.Println("-command=verify -verify=<transaction content> [-block=<block number>]")
 		fmt.Println("-command=help")
-		fmt.Println("For example: ")
+		fmt.Println("\nFor example: ")
 		fmt.Println("+ To add add multiple blocks with a specified number of transactions per block:\n go run . -command=add -numblocks=5 -transactionsperblock=2")
 		fmt.Println("+ To add a block with a specific transaction:\n go run . -command=add -blockdata=\"Transaction Content\"")
 		fmt.Println("+ To read blocks:\n go run . -command=read")
