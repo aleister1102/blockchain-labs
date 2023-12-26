@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { VotingContext } from "../context/VotingContext";
 
 // eslint-disable-next-line react/prop-types
 const VotingCard = ({ id, vote, name }) => {
-  const { handleVote } = useContext(VotingContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const { handleVote, isVote } = useContext(VotingContext);
   return (
     <div
       className="flex gap-2 flex-col basis-[30%] min-h-[400px] rounded-md bg-[rgba(0,0,0,0.35)] 
@@ -32,15 +33,27 @@ const VotingCard = ({ id, vote, name }) => {
         </p>
       </section>
       <section className="flex">
-        <button
-          className="m-auto border-solid border-[2px] border-orange-400 text-white 
-          font-medium px-6 py-2 rounded-full text-[18px] hover:bg-slate-700"
-          onClick={() => {
-            handleVote(id);
-          }}
-        >
-          Vote
-        </button>
+        {isLoading ? (
+          <p className="m-auto text-white text-xl">Loading ...</p>
+        ) : (
+          <button
+            className={`m-auto border-solid border-[2px] border-orange-400 text-white 
+          font-medium px-6 py-2 rounded-full text-[18px] hover:bg-slate-700 ${
+            isVote && "hidden"
+          }`}
+            onClick={async () => {
+              try {
+                setIsLoading(true);
+                await handleVote(id);
+                setIsLoading(false);
+              } catch (error) {
+                setIsLoading(false);
+              }
+            }}
+          >
+            Vote
+          </button>
+        )}
       </section>
     </div>
   );
