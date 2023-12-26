@@ -9,7 +9,7 @@ contract Voting {
     }
 
     mapping(uint256 => Candidate) private candidateLookup;
-    mapping(address => bool) private voterLookup;
+    mapping(address => bool) public voterLookup;
 
     uint256 public candidateCount = 0;
 
