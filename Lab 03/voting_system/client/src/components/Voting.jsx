@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import searchIcon from "../images/search.png";
 import VotingCard from "./VotingCard";
+import { VotingContext } from "../context/VotingContext";
 
 const Voting = () => {
   const [candidateID, setCandidateID] = useState("");
+  const { handleGetAllCandidates, candidates, currentAccount } =
+    useContext(VotingContext);
+
+  useEffect(() => {
+    handleGetAllCandidates();
+  }, [currentAccount]);
+
   return (
     <div className="w-full">
       <section className="w-full flex mb-10">
@@ -24,48 +32,7 @@ const Voting = () => {
         </div>
       </section>
       <section className="flex flex-wrap justify-evenly gap-10 min-h-[400px]">
-        {[
-          {
-            id: "id-1",
-            votes: 0,
-            name: "Alice",
-          },
-          {
-            id: "id-2",
-            votes: 0,
-            name: "Bob",
-          },
-          {
-            id: "id-3",
-            votes: 1,
-            name: "Jacy",
-          },
-          {
-            id: "id-4",
-            votes: 4,
-            name: "Tom",
-          },
-          {
-            id: "id-5",
-            votes: 0,
-            name: "Thomas",
-          },
-          {
-            id: "id-6",
-            votes: 0,
-            name: "John",
-          },
-          {
-            id: "id-7",
-            votes: 1,
-            name: "Jeff",
-          },
-          {
-            id: "id-8",
-            votes: 4,
-            name: "Amily",
-          },
-        ]
+        {candidates
           .filter((item) => {
             if (!candidateID) return true;
             return candidateID == item.id;

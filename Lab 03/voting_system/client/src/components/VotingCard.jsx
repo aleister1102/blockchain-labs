@@ -12,12 +12,15 @@ const VotingCard = ({ id, vote, name }) => {
       <span className="text-white text-2xl font-medium">{name}</span>
       <section className="flex-1">
         <img
-          className="w-full h-full"
-          src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${name}`}
+          className="w-full h-full rounded-md"
+          src={`https://api.dicebear.com/7.x/fun-emoji/svg?seed=${
+            // eslint-disable-next-line react/prop-types
+            name.split(" ")[0]
+          }`}
           alt="avatar"
         />
       </section>
-      <section className="text-white flex justify-between items-center text-xl">
+      <section className="text-white flex justify-between items-center text-xl mt-4">
         <p>
           ID: <span>{id}</span>
         </p>
@@ -32,7 +35,9 @@ const VotingCard = ({ id, vote, name }) => {
         <button
           className="m-auto border-solid border-[2px] border-orange-400 text-white 
           font-medium px-6 py-2 rounded-full text-[18px] hover:bg-slate-700"
-          onClick={handleVote}
+          onClick={() => {
+            handleVote(id);
+          }}
         >
           Vote
         </button>
