@@ -42,6 +42,7 @@
  */
 
 require('dotenv').config();
+const { ETHERSCAN_API_KEY } = process.env;
 
 module.exports = {
   compilers: {
@@ -61,5 +62,9 @@ module.exports = {
     dashboard: {
       port: 24012,
     }
-  }
+  },
+  plugins: ['truffle-plugin-verify'],
+  api_keys: {
+    etherscan: ETHERSCAN_API_KEY,
+  },
 }
