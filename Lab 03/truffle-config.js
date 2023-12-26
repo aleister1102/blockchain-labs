@@ -46,7 +46,7 @@ require('dotenv').config();
 module.exports = {
   compilers: {
     solc: {
-      version: "0.8.23",
+      version: "0.8.13",
     }
   },
   dashboard: {
