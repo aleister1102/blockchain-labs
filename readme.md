@@ -1,4 +1,4 @@
-# Simplified Blockchain Implementation and Verification
+# Collection of Blockchain Labs
 
 ## Contributors
 
@@ -11,13 +11,3 @@
 ## GitHub
 
 - https://github.com/aleister1102/simplified-blockchain/
-
-## Tham khảo
-
-- https://jeiwan.net/
-- https://docs.symbol.dev/concepts/data-validation.html
-- https://github.com/cbergoon/merkletree
-- https://pkg.go.dev/flag 
-- https://www.tutorialspoint.com/golang-program-to-implement-a-merkle-tree 
-- https://steemit.com/utopian-io/@tensor/building-a-blockchain-with-go---part-8---the-merkle-tree 
-- https://www.simplilearn.com/tutorials/blockchain-tutorial/merkle-tree-in-blockchain 
